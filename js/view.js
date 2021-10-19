@@ -12,6 +12,7 @@ export default class View {
         this.submitBtn = null;
         // todo列表
         this.todoList = null;
+
         this.initView();
     }
     /**
@@ -28,25 +29,17 @@ export default class View {
         this.form = document.createElement("form");//表单
         this.input = document.createElement("input");//输入框
         this.input.placeholder = "Add todo";
-
         this.form.appendChild(this.input);
+        // 提交按钮
         this.submitBtn = document.createElement("button");//提交按钮
         this.submitBtn.innerText = "提交";
-        this.submitBtn.addEventListener("click", () => {
-            alert(this.input.value);
-        })
+
         this.form.appendChild(this.submitBtn);
         this.app.appendChild(this.form);
 
         this.todoList = document.createElement("ul");
         this.app.appendChild(this.todoList);
-        this.displayTodoList([
-            {
-                id: 1,
-                content: "111",
-                complete: false
-            }
-        ]);
+
     }
 
     /**
@@ -58,15 +51,14 @@ export default class View {
         if (list.length === 0) {
             this.todoList.append("Nothing to do! Add a task?");
         } else {
-            /**
-             * 每一个列表项：有一个li标签，checkbox，editspan，删除按钮
-             */
+            // 每一个列表项：有一个li标签，checkbox，editspan，删除按钮
             list.forEach((d) => {
                 let li = document.createElement("li");
                 li.style.listStyle = "none";
                 li.setAttribute("id", d.id);
                 this.todoList.append(li);
 
+                // 多选框
                 let checkbox = document.createElement("input");
                 checkbox.setAttribute("type", "checkbox");
                 checkbox.checked = d.complete;
@@ -76,20 +68,35 @@ export default class View {
                     this.checkbox.checked = !d.complete;
                     d.complete = !d.complete;
                 });
-
+                // 编辑框
                 let editSpan = document.createElement("span");
                 editSpan.textContent = d.content;
                 editSpan.contentEditable = true;
                 this.editSpan = li.append(editSpan);
-
-                let submitBtn = document.createElement("button");
-                submitBtn.innerText = "删除";
-                this.submitBtn = li.append(submitBtn);
-                // TODO: 点击删除这个item
-                this.submitBtn.addEventListener("click", () => {
-                    
-                });
+                // 提交按钮
+                let deleteBtn = document.createElement("button");
+                deleteBtn.innerText = "删除";
+                this.deleteBtn = li.append(deleteBtn);
             })
         }
     }
+
+    /**
+     * 绑定监听器
+     * 1.新增：点击提交按钮，清空文本框，获取文本框内容并传送到model层
+     * 2.删除：获取当前item的id，传到model层进行修改
+     */
+
+    bindAdd(getContent) {
+       this.submitBtn.addEventListener("click", () =>{
+           let content = this.input.value;
+           if(content){
+               getContent(content);
+           }else{
+               alert("请输入待办");
+           }
+       }) 
+    }
+
+    
 }

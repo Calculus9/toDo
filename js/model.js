@@ -21,7 +21,7 @@ export default class Model {
                 complete: false
             }
         ];
-        this.toggleTodo(1);
+        
     }
 
     /**
