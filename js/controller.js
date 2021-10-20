@@ -6,11 +6,10 @@ export default class Controller {
         this.model = model;
         this.view = view;
 
-        console.log(this.view);
-
         this.view.bindAdd(this.setContent);
         this.view.bindDelete(this.setId);
         this.view.bindEdit(this.setEditString);
+        this.view.bindToggle(this.setStatus);
 
         this.display(this.model.todos);
     }
@@ -26,11 +25,13 @@ export default class Controller {
 
     setId = (id) => {
         this.model.deleteTodo(id);
-        console.log(this.model.todos);
     }
 
     setEditString = (id, content) => {
         this.model.editTodo(id, content);
-        console.log(this.model.todos);
+    }
+
+    setStatus = (id) => {
+        this.model.toggleTodo(id);
     }
 }

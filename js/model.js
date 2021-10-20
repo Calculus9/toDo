@@ -14,7 +14,7 @@ export default class Model {
             {
                 id: 1,
                 content: "10.8完成1/3",
-                complete: false
+                complete: true
             }, {
                 id: 2,
                 content: "10.9完成2/3",
@@ -77,7 +77,7 @@ export default class Model {
      */
     toggleTodo(id) {
         this.todos = this.todos.map((d) => {
-            if (d.id === id) {
+            if (d.id === +id) {
                 return {
                     id: d.id,
                     content: d.content,

@@ -66,14 +66,15 @@ export default class View {
                 checkbox.type = "checkbox";
                 checkbox.checked = d.complete;
                 this.checkbox = li.appendChild(checkbox);
-                this.checkbox.addEventListener("click", (x) => {
-                    x.checked = !d.complete;
-                });
 
                 // 编辑框
                 let editSpan = document.createElement("span");
-                editSpan.textContent = d.content;
                 editSpan.contentEditable = true;
+                if (this.checkbox.checked === true) {
+                    editSpan.innerHTML = `<s>${d.content}</s>`
+                } else {
+                    editSpan.innerHTML = d.content;
+                }
                 this.editSpan = li.appendChild(editSpan);
                 // 提交按钮
                 let deleteBtn = document.createElement("button");
@@ -120,6 +121,16 @@ export default class View {
         this.todoList.addEventListener("focusout", (event) => {
             id = event.target.parentNode.id;
             getEditString(id, text);
+        })
+    }
+
+    bindToggle(getStatus) {
+        this.todoList.addEventListener("click", (event) => {
+            if (event.target.type === "checkbox") {
+                let id = event.target.parentNode.id;
+                getStatus(id);
+
+            }
         })
     }
 }
