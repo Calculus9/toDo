@@ -42,6 +42,7 @@ export default class Model {
             complete: false
         };
         this.todos = [...this.todos, todo];
+        this.onTodoList(this.todos);
         return this.todos;
     }
 
@@ -50,8 +51,9 @@ export default class Model {
      */
     deleteTodo(id) {
         this.todos = this.todos.filter(d => {
-            if(d.id !== +id) return d;
+            if (d.id !== +id) return d;
         });
+        this.onTodoList(this.todos);
         return this.todos;
     }
     /**
@@ -69,6 +71,7 @@ export default class Model {
                 return d;
             }
         })
+        this.onTodoList(this.todos);
         return this.todos;
     }
 
@@ -85,5 +88,11 @@ export default class Model {
                 }
             } else return d;
         })
+        this.onTodoList(this.todos);
     }
+
+    bindChange(callback) {
+        this.onTodoList = callback;
+    }
+
 }

@@ -6,19 +6,29 @@ export default class Controller {
         this.model = model;
         this.view = view;
 
-        this.view.bindAdd(this.setContent);
-        this.view.bindDelete(this.setId);
-        this.view.bindEdit(this.setEditString);
-        this.view.bindToggle(this.setStatus);
-
+        // 绑定事件
+        this.viewBind();
+        // 展示列表
         this.display(this.model.todos);
+
+        // 绑定变化，每次数据一变，则display
+        this.model.bindChange(this.display);
     }
 
     display = (todos) => {
         this.view.displayTodoList(todos);
     }
 
-
+    viewBind() {
+        this.view.bindAdd(this.setContent);
+        this.view.bindDelete(this.setId);
+        this.view.bindEdit(this.setEditString);
+        this.view.bindToggle(this.setStatus);
+    }
+    /**
+     * 增删改切换
+     * @param {*} content 
+     */
     setContent = (content) => {
         this.model.addContent(content);
     }
