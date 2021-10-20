@@ -59,7 +59,7 @@ export default class Model {
      */
     editTodo(id, content) {
         this.todos = this.todos.map(d => {
-            if (d.id === id) {
+            if (d.id === +id) {
                 return {
                     id: d.id,
                     content: content,

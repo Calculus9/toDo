@@ -105,8 +105,21 @@ export default class View {
 
     bindDelete(getId) {
         this.todoList.addEventListener("click", (event) => {
-            let id = event.target.parentNode.id;
-            getId(id);
+            if (event.target.type === "submit") {
+                let id = event.target.parentNode.id;
+                getId(id);
+            }
+        })
+    }
+
+    bindEdit(getEditString) {
+        let text = null, id = null;
+        this.todoList.addEventListener("input", (event) => {
+            text = event.target.innerText;
+        });
+        this.todoList.addEventListener("focusout", (event) => {
+            id = event.target.parentNode.id;
+            getEditString(id, text);
         })
     }
 }

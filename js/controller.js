@@ -7,15 +7,18 @@ export default class Controller {
         this.view = view;
 
         console.log(this.view);
-        this.display(this.model.todos);
 
         this.view.bindAdd(this.setContent);
         this.view.bindDelete(this.setId);
+        this.view.bindEdit(this.setEditString);
+
+        this.display(this.model.todos);
     }
 
     display = (todos) => {
         this.view.displayTodoList(todos);
     }
+
 
     setContent = (content) => {
         this.model.addContent(content);
@@ -23,5 +26,11 @@ export default class Controller {
 
     setId = (id) => {
         this.model.deleteTodo(id);
+        console.log(this.model.todos);
+    }
+
+    setEditString = (id, content) => {
+        this.model.editTodo(id, content);
+        console.log(this.model.todos);
     }
 }
