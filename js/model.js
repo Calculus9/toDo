@@ -19,9 +19,13 @@ export default class Model {
                 id: 2,
                 content: "10.9完成2/3",
                 complete: false
+            }, {
+                id: 3,
+                content: "test",
+                complete: false
             }
         ];
-        
+
     }
 
     /**
@@ -45,7 +49,9 @@ export default class Model {
      * 传入需要删除的id，找到这个id删除对应的todo。
      */
     deleteTodo(id) {
-        this.todos = this.todos.filter(d => d.id !== id);
+        this.todos = this.todos.filter(d => {
+            if(d.id !== +id) return d;
+        });
         return this.todos;
     }
     /**

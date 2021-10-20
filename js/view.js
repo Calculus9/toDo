@@ -19,14 +19,22 @@ export default class View {
      * 初始化列表
      */
     initView() {
-        // 根节点
-        this.app = document.getElementById("root");
+        this.app = document.getElementById("root");// 根节点
+        this.initInput();//输入框一栏
+        // todoList列表
+        this.todoList = document.createElement("ul");
+        this.todoList.setAttribute("class", "todo-list");
+        this.app.appendChild(this.todoList);
+    }
+
+    initInput() {
         // 标题添加
         let title = document.createElement("h1");
         title.innerText = "Todo-list";
         this.title = this.app.appendChild(title);
         // 输入框
         this.form = document.createElement("form");//表单
+        this.form.setAttribute("class", "input-form");
         this.input = document.createElement("input");//输入框
         this.input.placeholder = "Add todo";
         this.form.appendChild(this.input);
@@ -36,10 +44,6 @@ export default class View {
 
         this.form.appendChild(this.submitBtn);
         this.app.appendChild(this.form);
-
-        this.todoList = document.createElement("ul");
-        this.app.appendChild(this.todoList);
-
     }
 
     /**
@@ -56,27 +60,27 @@ export default class View {
                 let li = document.createElement("li");
                 li.style.listStyle = "none";
                 li.setAttribute("id", d.id);
-                this.todoList.append(li);
 
                 // 多选框
-                let checkbox = document.createElement("input");
-                checkbox.setAttribute("type", "checkbox");
+                let checkbox = document.createElement('input');
+                checkbox.type = "checkbox";
                 checkbox.checked = d.complete;
                 this.checkbox = li.appendChild(checkbox);
-                //TODO: 点击之后切换我们的complete属性
-                this.checkbox.addEventListener("click", () => {
-                    this.checkbox.checked = !d.complete;
-                    d.complete = !d.complete;
+                this.checkbox.addEventListener("click", (x) => {
+                    x.checked = !d.complete;
                 });
+
                 // 编辑框
                 let editSpan = document.createElement("span");
                 editSpan.textContent = d.content;
                 editSpan.contentEditable = true;
-                this.editSpan = li.append(editSpan);
+                this.editSpan = li.appendChild(editSpan);
                 // 提交按钮
                 let deleteBtn = document.createElement("button");
                 deleteBtn.innerText = "删除";
-                this.deleteBtn = li.append(deleteBtn);
+                this.deleteBtn = li.appendChild(deleteBtn);
+                this.li = li;
+                this.todoList.append(li);
             })
         }
     }
@@ -88,15 +92,21 @@ export default class View {
      */
 
     bindAdd(getContent) {
-       this.submitBtn.addEventListener("click", () =>{
-           let content = this.input.value;
-           if(content){
-               getContent(content);
-           }else{
-               alert("请输入待办");
-           }
-       }) 
+        console.log(getContent);
+        this.submitBtn.addEventListener("click", () => {
+            let content = this.input.value;
+            if (content) {
+                getContent(content);
+            } else {
+                alert("请输入待办");
+            }
+        })
     }
 
-    
+    bindDelete(getId) {
+        this.todoList.addEventListener("click", (event) => {
+            let id = event.target.parentNode.id;
+            getId(id);
+        })
+    }
 }
