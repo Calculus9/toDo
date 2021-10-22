@@ -6,13 +6,13 @@ export default class Controller {
         this.model = model;
         this.view = view;
 
-        // 绑定事件
-        this.viewBind();
-        // 展示列表
+        // 展示初始化列表
         this.display(this.model.todos);
 
         // 绑定变化，每次数据一变，则display
         this.model.bindChange(this.display);
+        // 绑定事件
+        this.viewBind();
     }
 
     display = (todos) => {
@@ -20,11 +20,13 @@ export default class Controller {
     }
 
     viewBind() {
+        debugger;
         this.view.bindAdd(this.setContent);
         this.view.bindDelete(this.setId);
         this.view.bindEdit(this.setEditString);
         this.view.bindToggle(this.setStatus);
     }
+
     /**
      * 增删改切换
      * @param {*} content 

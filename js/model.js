@@ -86,9 +86,13 @@ export default class Model {
                     content: d.content,
                     complete: !d.complete,
                 }
-            } else return d;
-        })
+            } else {
+                return d;
+            };
+        });
+        console.log(this.todos);
         this.onTodoList(this.todos);
+        return this.todos;
     }
 
     bindChange(callback) {

@@ -45,11 +45,10 @@ export default class View {
         this.form.appendChild(this.submitBtn);
         this.app.appendChild(this.form);
     }
-
     /**
-     * 跟新todoList列表
-     * 展示现有列表li
-     */
+       * 更新todoList列表
+       * 展示现有列表li
+       */
     displayTodoList(list) {
         this.todoList.innerHTML = "";
         if (list.length === 0) {
@@ -70,12 +69,16 @@ export default class View {
                 // 编辑框
                 let editSpan = document.createElement("span");
                 editSpan.contentEditable = true;
+
+                editSpan.innerHTML = d.content;
                 if (this.checkbox.checked === true) {
                     editSpan.innerHTML = `<s>${d.content}</s>`
                 } else {
                     editSpan.innerHTML = d.content;
                 }
+
                 this.editSpan = li.appendChild(editSpan);
+
                 // 提交按钮
                 let deleteBtn = document.createElement("button");
                 deleteBtn.innerText = "删除";
@@ -85,7 +88,6 @@ export default class View {
             })
         }
     }
-
     /**
      * 绑定监听器
      * 1.新增：点击提交按钮，清空文本框，获取文本框内容并传送到model层
@@ -93,7 +95,6 @@ export default class View {
      */
 
     bindAdd(getContent) {
-        console.log(getContent);
         this.submitBtn.addEventListener("click", () => {
             let content = this.input.value;
             if (content) {
@@ -101,6 +102,7 @@ export default class View {
             } else {
                 alert("请输入待办");
             }
+            this.input.value = null;
         })
     }
 
@@ -129,7 +131,7 @@ export default class View {
             if (event.target.type === "checkbox") {
                 let id = event.target.parentNode.id;
                 getStatus(id);
-
+                alert(id);
             }
         })
     }
