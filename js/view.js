@@ -47,9 +47,9 @@ export default class View {
     }
 
     /**
-       * 更新todoList列表
-       * 展示现有列表li
-       */
+     * 更新todoList列表
+     * 展示现有列表li
+     */
     displayTodoList(list) {
         this.todoList.innerHTML = "";
         if (list.length === 0) {
@@ -70,7 +70,7 @@ export default class View {
                 // 编辑框
                 let editSpan = document.createElement("span");
                 editSpan.contentEditable = true;
-
+                editSpan.setAttribute("class", "edit");
                 editSpan.innerHTML = d.content;
                 if (d.complete === true) {
                     editSpan.innerHTML = `<s>${d.content}</s>`
@@ -120,12 +120,13 @@ export default class View {
         let text = null, id = null;
         this.todoList.addEventListener("input", (event) => {
             text = event.target.innerText;
-            this.todoList.addEventListener("focusout", (event) => {
+        });
+        this.todoList.addEventListener("focusout", (event) => {
+            if (event.target.className === "edit") {
                 id = event.target.parentNode.id;
                 getEditString(id, text);
-            })
-        });
-
+            }
+        })
     }
 
     bindToggle(getStatus) {

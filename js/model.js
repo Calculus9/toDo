@@ -5,11 +5,6 @@
 export default class Model {
     constructor() {
         // 初始化我们的todo清单
-        /**
-         * ID:序号
-         * content：内容
-         * complete： 是否完成
-         */
         this.todos = JSON.parse(localStorage.getItem("todos")) || [];
     }
 
@@ -86,7 +81,7 @@ export default class Model {
         this.onTodoList = callback;
     }
 
-    save(todos){
-        localStorage.setItem("todos",JSON.stringify(todos));
+    save(todos) {
+        localStorage.setItem("todos", JSON.stringify(todos));
     }
 }
