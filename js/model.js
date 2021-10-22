@@ -10,22 +10,7 @@ export default class Model {
          * content：内容
          * complete： 是否完成
          */
-        this.todos = [
-            {
-                id: 1,
-                content: "10.8完成1/3",
-                complete: true
-            }, {
-                id: 2,
-                content: "10.9完成2/3",
-                complete: false
-            }, {
-                id: 3,
-                content: "test",
-                complete: false
-            }
-        ];
-
+        this.todos = JSON.parse(localStorage.getItem("todos")) || [];
     }
 
     /**
@@ -43,6 +28,7 @@ export default class Model {
         };
         this.todos = [...this.todos, todo];
         this.onTodoList(this.todos);
+        this.save(this.todos);
         return this.todos;
     }
 
@@ -72,6 +58,7 @@ export default class Model {
             }
         })
         this.onTodoList(this.todos);
+        this.save(this.todos);
         return this.todos;
     }
 
@@ -91,6 +78,7 @@ export default class Model {
             };
         });
         this.onTodoList(this.todos);
+        this.save(this.todos);
         return this.todos;
     }
 
@@ -98,4 +86,7 @@ export default class Model {
         this.onTodoList = callback;
     }
 
+    save(todos){
+        localStorage.setItem("todos",JSON.stringify(todos));
+    }
 }
