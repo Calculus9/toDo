@@ -45,6 +45,7 @@ export default class View {
         this.form.appendChild(this.submitBtn);
         this.app.appendChild(this.form);
     }
+
     /**
        * 更新todoList列表
        * 展示现有列表li
@@ -71,7 +72,7 @@ export default class View {
                 editSpan.contentEditable = true;
 
                 editSpan.innerHTML = d.content;
-                if (this.checkbox.checked === true) {
+                if (d.complete === true) {
                     editSpan.innerHTML = `<s>${d.content}</s>`
                 } else {
                     editSpan.innerHTML = d.content;
@@ -119,11 +120,12 @@ export default class View {
         let text = null, id = null;
         this.todoList.addEventListener("input", (event) => {
             text = event.target.innerText;
+            this.todoList.addEventListener("focusout", (event) => {
+                id = event.target.parentNode.id;
+                getEditString(id, text);
+            })
         });
-        this.todoList.addEventListener("focusout", (event) => {
-            id = event.target.parentNode.id;
-            getEditString(id, text);
-        })
+
     }
 
     bindToggle(getStatus) {
@@ -131,7 +133,6 @@ export default class View {
             if (event.target.type === "checkbox") {
                 let id = event.target.parentNode.id;
                 getStatus(id);
-                alert(id);
             }
         })
     }

@@ -5,7 +5,6 @@ export default class Controller {
     constructor(model, view) {
         this.model = model;
         this.view = view;
-
         // 展示初始化列表
         this.display(this.model.todos);
 
@@ -20,7 +19,6 @@ export default class Controller {
     }
 
     viewBind() {
-        debugger;
         this.view.bindAdd(this.setContent);
         this.view.bindDelete(this.setId);
         this.view.bindEdit(this.setEditString);

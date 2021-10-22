@@ -90,7 +90,6 @@ export default class Model {
                 return d;
             };
         });
-        console.log(this.todos);
         this.onTodoList(this.todos);
         return this.todos;
     }
